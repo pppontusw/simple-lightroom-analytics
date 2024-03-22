@@ -11,9 +11,10 @@ FIELD_NAMES_LIST = [
     "cameraName",
     "focalLength",
     "aperture",
-    "shutterSpeed"
+    "shutterSpeed",
 ]
-    
+
+
 def parse_arguments():
     # Create an argument parser
     parser = argparse.ArgumentParser(description="List most used lenses")
@@ -25,7 +26,7 @@ def parse_arguments():
         default=365,
         help="Number of days to look back (default: 365)",
     )
-    
+
     parser.add_argument(
         "--property",
         type=str,
@@ -33,21 +34,31 @@ def parse_arguments():
         choices=[f for f in FIELD_NAMES_LIST if f != "captureTime"],
         help="The property to group by (default: lensName)",
     )
+    
+    parser.add_argument(
+        "--catalog-path",
+        type=str,
+        default=LR_CATALOG_FILE,
+        help=f"The path to the Lightroom catalog file (default: {LR_CATALOG_FILE})",
+    )
 
     # Parse the command line arguments
     args = parser.parse_args()
     return args
 
+
 def main():
-    lightroom_db = LightroomDB(LR_CATALOG_FILE)
+    args = parse_arguments()
+    
+    lightroom_db = LightroomDB(args.catalog_path)
     results = lightroom_db.get_all_picks()
+    
     selected_data = [{key: item[key] for key in FIELD_NAMES_LIST} for item in results]
     data = pd.DataFrame(selected_data)
 
     # Convert the "captureTime" column to datetime type
     data["captureTime"] = pd.to_datetime(data["captureTime"], format="mixed")
 
-    args = parse_arguments()
     # Calculate the date one year ago based on the lookback argument
     one_year_ago = data["captureTime"].max() - timedelta(days=args.lookback)
 
@@ -67,6 +78,7 @@ def main():
 
     # Display the sorted list of lenses and the total pictures taken with each
     print(lens_usage)
+
 
 if __name__ == "__main__":
     main()

@@ -3,6 +3,7 @@ import sqlite3
 
 from config import LR_CATALOG_FILE
 
+
 class LightroomDB:
     def __init__(self, db_path):
         self.conn = sqlite3.connect(db_path)
@@ -44,7 +45,7 @@ class LightroomDB:
         Get all images marked as picks in the Lightroom catalog
         and return them as a list of dictionaries.
         """
-        
+
         query = """
             SELECT *,
             AgInternedExifLens.value as lensName,
@@ -59,19 +60,3 @@ class LightroomDB:
         result = self.get_results_as_dicts()
 
         return result
-
-def main():
-    lightroom_db = LightroomDB(LR_CATALOG_FILE)
-    result = lightroom_db.get_all_picks()
-
-    for item in result:
-        print(
-            item["captureTime"],
-            item["lensName"],
-            item["cameraName"],
-            item["focalLength"],
-            item["aperture"],
-        )
-
-if __name__ == "__main__":
-    main()
