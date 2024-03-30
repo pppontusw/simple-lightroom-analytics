@@ -3,3 +3,4 @@ venv
 output.csv
 __pycache__/
 .DS_Store
+.mypy__cache
