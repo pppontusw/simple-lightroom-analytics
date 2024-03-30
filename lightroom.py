@@ -40,7 +40,7 @@ class LightroomDB:
             for item in data:
                 writer.writerow({field: item[field] for field in fieldnames})
 
-    def get_all_picks(self):
+    def get_all_picks(self, picks_only=True):
         """
         Get all images marked as picks in the Lightroom catalog
         and return them as a list of dictionaries.
@@ -54,8 +54,9 @@ class LightroomDB:
             JOIN AgHarvestedExifMetadata ON Adobe_images.id_local = AgHarvestedExifMetadata.image
             JOIN AgInternedExifCameraModel ON AgHarvestedExifMetadata.cameraModelRef = AgInternedExifCameraModel.id_local
             LEFT JOIN AgInternedExifLens ON AgHarvestedExifMetadata.lensRef = AgInternedExifLens.id_local
-            WHERE Adobe_images.pick = 1
         """
+        if picks_only:
+            query += "WHERE Adobe_images.pick = 1"
         self.cur.execute(query)
         result = self.get_results_as_dicts()
 

@@ -43,6 +43,14 @@ def parse_arguments():
         help=f"The path to the Lightroom catalog file (default: {LR_CATALOG_FILE})",
     )
 
+    parser.add_argument(
+        "--picks-only",
+        action="store_true",
+        default=False,
+        help="Count only picks (flagged)",
+    )
+    
+
     # Parse the command line arguments
     args = parser.parse_args()
     return args
@@ -52,7 +60,7 @@ def main():
     args = parse_arguments()
     
     lightroom_db = LightroomDB(args.catalog_path)
-    results = lightroom_db.get_all_picks()
+    results = lightroom_db.get_all_picks(args.picks_only)
     
     selected_data = [{key: item[key] for key in FIELD_NAMES_LIST} for item in results]
     data = pd.DataFrame(selected_data)

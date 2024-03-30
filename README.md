@@ -6,8 +6,9 @@ A couple of small scripts to read data from a lightroom classic catalog
 
 `python3 list_most_used.py` will by default list the most used lenses in the last 365 days
 
-```
-usage: list_most_used.py [-h] [--lookback LOOKBACK] [--property {lensName,cameraName,focalLength,aperture,shutterSpeed}] [--catalog-path CATALOG_PATH]
+```bash
+usage: list_most_used.py [-h] [--lookback LOOKBACK] [--property {lensName,cameraName,focalLength,aperture,shutterSpeed}]
+                         [--catalog-path CATALOG_PATH] [--picks-only]
 
 List most used lenses
 
@@ -18,4 +19,5 @@ options:
                         The property to group by (default: lensName)
   --catalog-path CATALOG_PATH
                         The path to the Lightroom catalog file (default: catalog-v13.lrcat)
+  --picks-only          Count only picks (flagged)
 ```
