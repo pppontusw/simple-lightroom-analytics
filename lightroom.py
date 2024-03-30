@@ -52,8 +52,8 @@ class LightroomDB:
             AgInternedExifCameraModel.value as cameraName
             FROM Adobe_images
             JOIN AgHarvestedExifMetadata ON Adobe_images.id_local = AgHarvestedExifMetadata.image
-            JOIN AgInternedExifLens ON AgHarvestedExifMetadata.lensRef = AgInternedExifLens.id_local
             JOIN AgInternedExifCameraModel ON AgHarvestedExifMetadata.cameraModelRef = AgInternedExifCameraModel.id_local
+            LEFT JOIN AgInternedExifLens ON AgHarvestedExifMetadata.lensRef = AgInternedExifLens.id_local
             WHERE Adobe_images.pick = 1
         """
         self.cur.execute(query)
