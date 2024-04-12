@@ -1,8 +1,14 @@
 import csv
 import sqlite3
 
-from config import LR_CATALOG_FILE
-
+FIELD_NAMES_LIST = [
+    "captureTime",
+    "lensName",
+    "cameraName",
+    "focalLength",
+    "aperture",
+    "shutterSpeed",
+]
 
 class LightroomDB:
     def __init__(self, db_path):
@@ -40,7 +46,7 @@ class LightroomDB:
             for item in data:
                 writer.writerow({field: item[field] for field in fieldnames})
 
-    def get_all_picks(self, picks_only=True):
+    def get_all_images(self, picks_only=True):
         """
         Get all images marked as picks in the Lightroom catalog
         and return them as a list of dictionaries.

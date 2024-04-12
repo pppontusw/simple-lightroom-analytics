@@ -3,7 +3,7 @@ from lightroom import LightroomDB
 import pprint
 
 lightroom_db = LightroomDB(LR_CATALOG_FILE)
-result = lightroom_db.get_all_picks()
+result = lightroom_db.get_all_images()
 cameras = []
 lenses = []
 for image in result:
