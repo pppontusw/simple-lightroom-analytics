@@ -8,7 +8,7 @@ def get_filtered_images():
     args = parse_arguments()
     
     lightroom_db = LightroomDB(args.catalog_path)
-    results = lightroom_db.get_all_images(args.picks_only)
+    results = lightroom_db.get_all_images(args.picks_only, args.rating)
     
     selected_data = [{key: item[key] for key in FIELD_NAMES_LIST} for item in results]
     data = pd.DataFrame(selected_data)

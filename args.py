@@ -38,6 +38,12 @@ def parse_arguments():
         help="Count only picks (flagged)",
     )
     
+    parser.add_argument(
+        "--rating",
+        type=int,
+        default=0,
+        help="Count only picks (flagged)",
+    )
 
     # Parse the command line arguments
     args = parser.parse_args()
