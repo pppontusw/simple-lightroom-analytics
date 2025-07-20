@@ -8,7 +8,7 @@ from data import get_filtered_images
 def lens_by_year_month(images, property):
     # Create a new DataFrame with columns for Year-Month and LensName
     new_data = pd.DataFrame({
-        "Year-Month": images["captureTime"].dt.strftime("%Y-%m"),
+        "Year-Month": "01." + images["captureTime"].dt.strftime("%m.%Y"),
         property: images[property]
     })
 
