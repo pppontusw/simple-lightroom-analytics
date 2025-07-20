@@ -1,0 +1,7 @@
+# .dockerignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+catalog-*.lrcat
+output.csv

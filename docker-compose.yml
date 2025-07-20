@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  lightroom-api:
+    build: .
+    ports:
+      - "8089:8000"
+    environment:
+      - API_KEY=changeme  # Change this to your desired API key
+      - LR_CATALOG_FILE=/catalog/your-catalog.lrcat
+    volumes:
+      - ./catalog:/catalog:ro  # Mount your catalog directory (read-only)
+    restart: unless-stopped
