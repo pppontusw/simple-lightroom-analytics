@@ -61,6 +61,7 @@ def by_year_month_csv(
     property: str = Query("lensName", description="The property to group by", enum=[f for f in FIELD_NAMES_LIST if f != "captureTime"]),
     picks_only: bool = Query(False, description="Count only picks (flagged)"),
     catalog_path: str = Query(LR_CATALOG_FILE, description="Path to Lightroom catalog file"),
+    delimiter: str = Query(",", description="Delimiter for CSV output. Use ',' for comma, ';' for semicolon, or 'tab' for tab."),
     api_key: str = Depends(verify_api_key)
 ):
     with LightroomDB(catalog_path) as lightroom_db:
@@ -69,7 +70,8 @@ def by_year_month_csv(
         data = pd.DataFrame(selected_data)
         if data.empty:
             output = io.StringIO()
-            output.write('Year-Month,{}\n'.format(property))
+            delim = '\t' if delimiter == 'tab' else delimiter
+            output.write('Year-Month{}{}\n'.format(delim, property))
             output.seek(0)
             return StreamingResponse(output, media_type="text/csv")
         data["captureTime"] = pd.to_datetime(data["captureTime"], format="mixed")
@@ -83,6 +85,7 @@ def by_year_month_csv(
         })
         count_data = new_data.groupby(["Year-Month", property]).size().reset_index(name="Count")
         output = io.StringIO()
-        count_data.to_csv(output, index=False)
+        delim = '\t' if delimiter == 'tab' else delimiter
+        count_data.to_csv(output, index=False, sep=delim)
         output.seek(0)
         return StreamingResponse(output, media_type="text/csv")
