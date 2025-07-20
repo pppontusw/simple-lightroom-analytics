@@ -2,12 +2,12 @@ version: "3.8"
 
 services:
   lightroom-api:
-    build: .
+    image: ghcr.io/pppontusw/simple-lightroom-analytics-api:latest
     ports:
       - "8089:8000"
     environment:
-      - API_KEY=changeme  # Change this to your desired API key
-      - LR_CATALOG_FILE=/catalog/your-catalog.lrcat
+      - API_KEY=changeme
+      - LR_CATALOG_FILE=/catalog/catalog-v13-3.lrcat
     volumes:
-      - ./catalog:/catalog:ro  # Mount your catalog directory (read-only)
+      - /volume2/simple-lightroom-analytics-api/catalog:/catalog:rw
     restart: unless-stopped
