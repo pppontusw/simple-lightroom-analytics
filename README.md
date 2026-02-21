@@ -1,5 +1,12 @@
 # Simple Lightroom Catalog Analytics
 
+## NOTE: THIS PROJECT IS DEPRECATED
+
+This project has been effectively superseded by: https://github.com/pppontusw/lightroom-analytics
+
+---
+
+
 This repository provides tools to analyze your Adobe Lightroom Classic catalog, either by running local scripts and exporting to CSV/Excel, or by hosting an HTTP API for direct integration with tools like Excel or Google Sheets.
 
 ## Features
